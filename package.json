@@ -8,11 +8,23 @@
   },
   "scripts": {
     "dev": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "link-module-alias"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "link-module-alias": "^1.2.0",
     "lite-server": "^2.3.0"
+  },
+  "dependencies": {
+    "jsdom": "^21.1.1",
+    "web3": "^1.9.0"
+  },
+  "_moduleAliases": {
+    "src": "./src",
+    "test": "./test",
+    "artifact": "./artifacts",
+    "root": "./"
   }
 }
