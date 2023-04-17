@@ -226,5 +226,48 @@ input{
   padding: 0.5em;
   font-size: 1.0em;
 }
+.remCit{
+  background-color: #ff0000;
+  color: #ffffff;
+  width: 30vh;
+
+  border: none;
+  padding: 0.2em, 0.1em;
+  margin:1% 1%;
+  display:inline;
+  border-radius: 0.2em;
+}
+.addCit{
+  background-color: #00ff00;
+  color: #ffffff;
+  width: 30vh;
+
+  border: none;
+  padding: 0.2em, 0.1em;
+  margin:1% 1%;
+  display:inline;
+  border-radius: 0.2em;
+}
+.remCit:hover{
+  background-color: #bd0000;
+  width: 30vh;
+  color: #ffffff;
+  border: none;
+  padding: 0.2em, 0.1em;
+  margin:1% 1%;
+  display:inline;
+  border-radius: 0.2em;
+}
+.addCit:hover{
+  background-color: #00bd00;
+  color: #ffffff;
+  width: 30vh;
+
+  border: none;
+  padding: 0.2em, 0.1em;
+  margin:1% 1%;
+  display:inline;
+  border-radius: 0.2em;
+}
 
 </style>
