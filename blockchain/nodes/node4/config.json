@@ -1,0 +1,37 @@
+{
+  "network": {
+    "port": 30307,
+    "nodeId": "node4",
+    "bootnodes": [
+      "enode://00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000@localhost:30301"
+    ],
+    "genesis": "./blockchain/nodes/node4/genesis.json",
+    "networkId": "23456",
+    "p2p": {
+      "enabled": true,
+      "listen": "127.0.0.1",
+      "bindIp": "127.0.0.1",
+      "port": 30307,
+      "discovery": {
+        "enabled": true,
+        "bindIp": "127.0.0.1",
+        "port": 30307,
+        "bootnodes": [
+          "enode://00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000@localhost:30301"
+        ]
+      }
+    }
+  },
+  "rpc": {
+    "http": {
+      "enabled": true,
+      "host": "127.0.0.1",
+      "port": 8549
+    }
+  },
+  "miner": {
+    "coinbase": "0000000000000000000000000000000000000000"
+  },
+  "genesis": "./blockchain/nodes/node4/genesis.json",
+  "identity": "./blockchain/nodes/node4/key"
+}

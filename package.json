@@ -8,15 +8,26 @@
   },
   "scripts": {
     "dev": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "link-module-alias"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "link-module-alias": "^1.2.0",
     "lite-server": "^2.3.0"
   },
   "dependencies": {
+    "@truffle/contract": "^4.6.19",
+    "jsdom": "^21.1.1",
+    "web3": "^1.9.0",
     "vue": "^3.2.47",
     "vuejs": "^3.0.1"
+  },
+  "_moduleAliases": {
+    "src": "./src",
+    "test": "./test",
+    "artifact": "./artifacts",
+    "root": "./"
   }
 }

@@ -1,68 +1,139 @@
+const config = require("../../config.json");
+const Web3 = require("web3");
+const TruffleContract = require("./truffle-contract");
+
+const { JSDOM } = require("jsdom");
+
+// Create a fake DOM environment
+const dom = new JSDOM("<!doctype html><html><body></body></html>", {
+  url: "http://localhost",
+});
+
+async function loadJSON(url) {
+  const res = await fetch(url);
+  return await res.json();
+}
+
+// Set global variables in the fake DOM environment
+global.window = dom.window;
+global.document = dom.window.document;
+global.navigator = dom.window.navigator;
+
 App = {
   web3Provider: null,
   contracts: {},
 
-  init: async function() {
-    // Load pets.
-    $.getJSON('../pets.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+  init: async function () {
+    initweb3 = await App.initWeb3();
+    // Load articles.
+    if (document) {
+      var articleRow = document.querySelector("#articleRow");
+      var articleTemplate = document.querySelector("#articleTemplate");
+    }
+    // Get the number of articles from the smart contract
+    const numberOfArticles = await App.contracts.Article.count();
 
-      for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+    // Loop through each article and display it
+    for (let i = 0; i < numberOfArticles; i++) {
+      // Get the article from the smart contract
+      const article = await App.contracts.Article.getArticle(i);
 
-        petsRow.append(petTemplate.html());
-      }
-    });
+      // Fill in the article template with the article information
+      articleTemplate.querySelector(".panel-title").textContent = article.title;
+      articleTemplate.querySelector(".article-author").textContent =
+        article.author;
+      articleTemplate.querySelector(".article-content").textContent =
+        article.content;
+      articleTemplate.querySelector(".article-timestamp").textContent =
+        article.timestamp;
 
-    return await App.initWeb3();
+      // Append the article to the article row
+      articleRow.innerHTML += articleTemplate.innerHTML;
+    }
+
+    return initweb3;
   },
 
-  initWeb3: async function() {
-    /*
-     * Replace me...
-     */
-
+  initWeb3: async function () {
+    // Modern dapp browsers...
+    // Check if we're running in a web browser
+    if (window && window.ethereum) {
+      App.web3Provider = window.ethereum;
+      try {
+        // Request account access
+        await window.ethereum.enable();
+      } catch (error) {
+        // User denied account access...
+        console.error("User denied account access");
+      }
+    }
+    // Legacy dapp browsers...
+    else if (window && window.web3) {
+      App.web3Provider = window.web3.currentProvider;
+    }
+    // If we're not running in a web browser, use the HTTP provider
+    else {
+      //url and port is in the .env file
+      App.web3Provider = new Web3(
+        new HttpProvider(config.url + ":" + config.port)
+      );
+    }
+    web3 = new Web3(App.web3Provider);
     return App.initContract();
   },
 
-  initContract: function() {
-    /*
-     * Replace me...
-     */
+  initContract: function () {
+    data = require("./Article.json");
+    // Get the necessary contract artifact file and instantiate it with @truffle/contract
+    var ArticleArtifact = data;
+    App.contracts.Article = TruffleContract(ArticleArtifact);
+    // Set the provider for our contract
+    App.contracts.Article.setProvider(App.web3Provider);
 
     return App.bindEvents();
   },
 
-  bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
+  bindEvents: function () {
+    // No events to bind
   },
 
-  markAdopted: function() {
-    /*
-     * Replace me...
-     */
+  createArticle: function (
+    title,
+    content,
+    citationWeights,
+    citationAuthors,
+    citationContents
+  ) {
+    var articleInstance;
+    App.contracts.Article.deployed()
+      .then(function (instance) {
+        articleInstance = instance;
+        // Create the new article with the specified title and content
+        return articleInstance.createArticle(
+          title,
+          content,
+          citationWeights,
+          citationAuthors,
+          citationContents,
+          { from: web3.eth.accounts[0] }
+        );
+      })
+      .then(function (result) {
+        console.log(result);
+        alert("Article created successfully!");
+        // Handle the event emitted by the contract when an articleis created
+      })
+      .catch(function (err) {
+        console.log(err.message);
+        alert("Failed to create article");
+      });
   },
-
-  handleAdopt: function(event) {
-    event.preventDefault();
-
-    var petId = parseInt($(event.target).data('id'));
-
-    /*
-     * Replace me...
-     */
-  }
-
 };
 
-$(function() {
-  $(window).load(function() {
+if (window) {
+  window.onload = function () {
     App.init();
-  });
-});
+  };
+} else {
+  App.init();
+}
