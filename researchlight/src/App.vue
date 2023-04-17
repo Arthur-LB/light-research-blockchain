@@ -4,23 +4,29 @@
       <li><a href="#">Home</a></li>
       <li><a href="https://github.com/Arthur-LB">Arthur-Louis BONNEAU</a></li>
       <li><a href="https://github.com/ItsaiKara">Tyfenn ELOY</a></li>
+      <!-- a link to display the form-->
     </ul>
   </nav>
   <div>
+    <button class="showForm" @click="showForm = !showForm">{{ showForm ? 'Hide' : 'Show' }} form</button>
+    <FormArticle v-if="showForm"></FormArticle>
     <ListeArticle :articles="ListeArticles"></ListeArticle>
   </div>
 </template>
 
 <script>
 import ListeArticle from "./components/ListeArticles.vue";
+import FormArticle from "./components/formArticle.vue";
 
 export default {
   name: "App",
   components: {
     ListeArticle,
-  },
+    FormArticle
+},
   data() {
     return {
+      showForm : true, //display of the form
       ListeArticles: [
         {
           authorName: "John Doe",
@@ -185,4 +191,40 @@ a:hover {
   color: #2937ff;
   text-decoration: none;
   }
+button {
+  background-color: #c7c2ff;
+  font-size: 1.5em;
+  border: none;
+  padding: 0.2em, 0.1em;
+  margin:1% auto;
+  display:block;
+  border-radius: 0.2em;
+}
+button:hover {
+  background-color: #a39bff;
+  font-size: 1.5em;
+  border: none;
+  padding: 0.2em, 0.1em;
+  margin:1% auto;
+  display:block;
+  border-radius: 0.2em;
+}
+.formArticle{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  width: 95%;
+  align-items: center;
+  background-color: #c7c2ff;
+  padding: 0;
+  margin: 1% auto;
+  text-align: center;
+}
+input{
+  margin: 0.5em;
+  padding: 0.5em;
+  font-size: 1.0em;
+}
+
 </style>
