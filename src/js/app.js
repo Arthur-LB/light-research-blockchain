@@ -1,5 +1,6 @@
 const config = require("../../config.json");
 const Web3 = require("web3");
+const TruffleContract = require("./truffle-contract");
 
 const { JSDOM } = require("jsdom");
 
@@ -7,6 +8,11 @@ const { JSDOM } = require("jsdom");
 const dom = new JSDOM("<!doctype html><html><body></body></html>", {
   url: "http://localhost",
 });
+
+async function loadJSON(url) {
+  const res = await fetch(url);
+  return await res.json();
+}
 
 // Set global variables in the fake DOM environment
 global.window = dom.window;
@@ -68,8 +74,8 @@ App = {
     // If we're not running in a web browser, use the HTTP provider
     else {
       //url and port is in the .env file
-      App.web3Provider = new Web3.providers.HttpProvider(
-        `${config.WEB3_HTTP_PROVIDER_URL}:${config.WEB3_HTTP_PROVIDER_PORT}`
+      App.web3Provider = new Web3(
+        new HttpProvider(config.url + ":" + config.port)
       );
     }
     web3 = new Web3(App.web3Provider);
@@ -77,25 +83,14 @@ App = {
   },
 
   initContract: function () {
-    return fetch("@artifacts/Article.json")
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        // Get the necessary contract artifact file and instantiate it with @truffle/contract
-        var ArticleArtifact = data;
-        App.contracts.Article = TruffleContract(ArticleArtifact);
-        // Set the provider for our contract
-        App.contracts.Article.setProvider(App.web3Provider);
+    data = require("./Article.json");
+    // Get the necessary contract artifact file and instantiate it with @truffle/contract
+    var ArticleArtifact = data;
+    App.contracts.Article = TruffleContract(ArticleArtifact);
+    // Set the provider for our contract
+    App.contracts.Article.setProvider(App.web3Provider);
 
-        return App.bindEvents();
-      })
-      .then(function () {
-        return App.createArticle();
-      })
-      .catch(function (err) {
-        console.log(err.message);
-      });
+    return App.bindEvents();
   },
 
   bindEvents: function () {
