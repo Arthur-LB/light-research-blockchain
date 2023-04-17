@@ -13,33 +13,58 @@
             <h3 class="formArticleH3">
                 Ajouter des citations
             </h3>
-            <ul>
-                <li v-for="nbCases in nbCase" :key="nbCases">
-                    <input type="text" v-model="citation.text" placeholder="Citation text">
-                </li>
-                <li v-for="nbCases in nbCase" :key="nbCases">
-                    <input type="text" v-model="citation.text" placeholder="Citation text">
-                </li>
-            </ul>
-            <button class="addCit" @click="nbCases = nbCases++"> Add citation ({{ nbCases }})</button>
-            <input typesubmit>
+            <button class="addCit" @click="nbCasesInc()"> Add citation </button>
+            <button class="remCit" @click="nbCasesDec()"> Remove citation </button>
+            <!-- <input type="text" v-model="citation.text" placeholder="Citation address" /> -->
+                <div v-for="(weight, index) in nbWeight" :key="index">
+                    <input type="text" v-model="citations" placeholder="Citation url" />
+                    <input type="number" v-model="weights" placeholder="Weight" />
+                </div>
+            
+            <input type="submit" value="Submit">
         </form>
     </div>
 </template>
 
+
+
 <script>
 export default {
+    components: {
+        
+    },
     name: "FormArticle",
     props: {
     },
     data() {
         return {
-            nbCases: 1,
+            nbCitation: 1,
+            nbWeight: 1,
             authorName: "",
             authorAddress: "",
             articleTitle: "",
             articleUrl: "",
+            citations: [],
+            weights: [],
         };
+    },
+    methods: {
+        nbCasesInc() {
+            if (this.nbCitation >= 10) {
+                alert("You can't add more than 10 citations");
+                return;
+            }
+            this.nbCitation++;
+            this.nbWeight++;
+        },
+        nbCasesDec() {
+            if (this.nbCitation <= 1) {
+                alert("You must have at least 1 citation");
+                return;
+            }
+            this.nbCitation--;
+            this.nbWeight--;
+        },
     },
 };
 </script>
