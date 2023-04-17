@@ -1,5 +1,5 @@
 {
-  "name": "pet-shop",
+  "name": "researchlight",
   "version": "1.0.0",
   "description": "",
   "main": "truffle.js",
@@ -14,5 +14,9 @@
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.3.0"
+  },
+  "dependencies": {
+    "vue": "^3.2.47",
+    "vuejs": "^3.0.1"
   }
 }
