@@ -1,6 +1,6 @@
 const config = require("../../config.json");
 const Web3 = require("web3");
-const TruffleContract = require("./truffle-contract");
+const TruffleContract = require("./js/truffle-contract");
 
 const { JSDOM } = require("jsdom");
 
@@ -13,11 +13,6 @@ async function loadJSON(url) {
   const res = await fetch(url);
   return await res.json();
 }
-
-// Set global variables in the fake DOM environment
-global.window = dom.window;
-global.document = dom.window.document;
-global.navigator = dom.window.navigator;
 
 App = {
   web3Provider: null,
@@ -74,11 +69,10 @@ App = {
     // If we're not running in a web browser, use the HTTP provider
     else {
       //url and port is in the .env file
-      App.web3Provider = new Web3(
-        new HttpProvider(config.url + ":" + config.port)
+      App.web3Provider = new Web3.providers.HttpProvider(
+        `http://${config.host}:${config.port}`
       );
     }
-    web3 = new Web3(App.web3Provider);
     return App.initContract();
   },
 

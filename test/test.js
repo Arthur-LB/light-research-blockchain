@@ -1,5 +1,5 @@
 const Article = artifacts.require("Article");
-const App = require("../src/js/app.js");
+const App = require("../researchlight/src/app.js");
 
 contract("Article", async (accounts) => {
   let app;

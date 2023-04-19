@@ -20,9 +20,9 @@
   "dependencies": {
     "@truffle/contract": "^4.6.19",
     "jsdom": "^21.1.1",
-    "web3": "^1.9.0",
     "vue": "^3.2.47",
-    "vuejs": "^3.0.1"
+    "vuejs": "^3.0.1",
+    "web3": "^1.9.0"
   },
   "_moduleAliases": {
     "src": "./src",
