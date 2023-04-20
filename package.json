@@ -13,11 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@truffle/contract": "^4.6.19",
     "@vue/cli": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
     "assert": "^2.0.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "cssom": "^0.5.0",
     "events": "^3.3.0",
@@ -40,5 +42,27 @@
     "util": "^0.12.5",
     "vm": "^0.1.0",
     "web3": "^1.9.0"
+  },
+  "resolve": {
+    "fallback": {
+      "path": false,
+      "fs": false,
+      "crypto": false,
+      "stream": false,
+      "buffer": false,
+      "assert": false,
+      "util": false,
+      "events": false,
+      "vm": false,
+      "punycode": false,
+      "querystring": false,
+      "url": false,
+      "https": false,
+      "http": false,
+      "os": false,
+      "net": false,
+      "zlib": false,
+      "tls": false
+    }
   }
 }

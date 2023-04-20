@@ -4,10 +4,21 @@ const TruffleContract = require("./js/truffle-contract");
 
 const { JSDOM } = require("jsdom");
 
+module.exports = {
+  App,
+  resolve: {
+    fallback: {
+      "path": false
+    }
+  }
+
+}
+
 // Create a fake DOM environment
 const dom = new JSDOM("<!doctype html><html><body></body></html>", {
   url: "http://localhost",
 });
+
 
 async function loadJSON(url) {
   const res = await fetch(url);
@@ -131,3 +142,4 @@ if (window) {
 } else {
   App.init();
 }
+
