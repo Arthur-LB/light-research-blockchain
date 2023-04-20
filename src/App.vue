@@ -1,13 +1,13 @@
 <template>
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="https://github.com/Arthur-LB">Arthur-Louis BONNEAU</a></li>
-      <li><a href="https://github.com/ItsaiKara">Tyfenn ELOY</a></li>
-      <!-- a link to display the form-->
-    </ul>
-  </nav>
   <div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="https://github.com/Arthur-LB">Arthur-Louis BONNEAU</a></li>
+        <li><a href="https://github.com/ItsaiKara">Tyfenn ELOY</a></li>
+        <!-- a link to display the form-->
+      </ul>
+    </nav>
     <button class="showForm" @click="showForm = !showForm">{{ showForm ? 'Hide' : 'Show' }} form</button>
     <FormArticle v-if="showForm"></FormArticle>
     <ListeArticle :articles="ListeArticles"></ListeArticle>
